@@ -1,0 +1,36 @@
+{
+  "name": "angular-requests-analyzer",
+  "version": "0.1.0",
+  "license": "MIT",
+  "angular-cli": {},
+  "scripts": {
+    "start": "ng serve",
+    "lint": "tslint \"src/**/*.ts\"",
+    "build": "ng build && cp -R src/public dist/public",
+    "prepare": "cp -a electron/. dist",
+    "electron": "npm run prepare && electron dist",
+    "package": "npm run build && npm run prepare && ./node_modules/electron-packager/cli.js dist AngularRequestsAnalyzer --platform=linux --arch=x64 --out=dist-app --overwrite"
+  },
+  "dependencies": {
+    "@angular/common": "~2.4.0",
+    "@angular/compiler": "~2.4.0",
+    "@angular/core": "~2.4.0",
+    "@angular/forms": "~2.4.0",
+    "@angular/http": "~2.4.0",
+    "@angular/platform-browser": "~2.4.0",
+    "@angular/platform-browser-dynamic": "~2.4.0",
+    "@angular/router": "~3.4.0",
+    "core-js": "^2.4.1",
+    "rxjs": "5.0.1",
+    "zone.js": "^0.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.46",
+    "@angular/cli": "1.0.0-rc.2",
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0",
+    "ts-node": "2.1.0",
+    "tslint": "4.5.1",
+    "typescript": "^2.2.0"
+  }
+}

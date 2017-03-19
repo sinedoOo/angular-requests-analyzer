@@ -1,0 +1,17 @@
+<div id="analyzer-component">
+    <pre class="app-state">{{ analysis | json }}</pre>
+    <button (click)="executeAnalysis()" *ngIf="!executingAnalysis">Execute</button>
+    <div id="analyzer-requests-chart"
+         *ngIf="executedAnalysis && !executingAnalysis"
+         [chartData]="requestsData"
+         [chartOptions] = "requestsDataOptions"
+         chartType="AreaChart"
+         google-chart></div>
+    <div id="analyzer-delay-chart"
+         *ngIf="executedAnalysis && !executingAnalysis"
+         [chartData]="delayData"
+         [chartOptions] = "delayDataOptions"
+         chartType="AreaChart"
+         google-chart></div>
+    <span *ngIf="executingAnalysis">{{ requester.queryProgress * 100 | number:'1.0-0' }}%</span>
+</div>
