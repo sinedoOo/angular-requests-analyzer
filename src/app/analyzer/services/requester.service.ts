@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 
 import { Analysis } from './../types/analysis.interface';
-import { Request } from './../types/request.interface';
+import { AnalyzerRequest } from './../types/analyzerRequest.interface';
 import { HttpRequestType } from './../types/httpRequestType.enum';
 import { RequesterResult } from './../types/requesterResult.interface';
 
@@ -12,7 +12,7 @@ export class Requester {
 
     private analysis: Analysis = null;
     private query: Array<Array<{
-        request: Request,
+        request: AnalyzerRequest,
         result: RequesterResult}>> = [];
 
     constructor(private http: Http) {}
@@ -101,7 +101,7 @@ export class Requester {
     }
 
     private processRequest(
-        request: Request,
+        request: AnalyzerRequest,
         result: RequesterResult,
         startDate: number,
         expireDate: number): void {
