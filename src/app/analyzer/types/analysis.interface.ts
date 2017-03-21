@@ -1,8 +1,8 @@
-import { Request } from './request.interface';
+import { AnalyzerRequest } from './analyzerRequest.interface';
 
 export interface Analysis {
     rangeOfSimultaneousReqestsQueries: {from: number, to: number};
     step: number,
     queryTime: number;
-    requestsQuery: Array<Request>;
+    requestsQuery: Array<AnalyzerRequest>;
 }

@@ -1,6 +1,6 @@
 import { HttpRequestType } from './httpRequestType.enum';
 
-export interface Request {
+export interface AnalyzerRequest {
     type: HttpRequestType;
     url: string;
     headers?: any;

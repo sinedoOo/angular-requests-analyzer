@@ -1,1 +1,16 @@
 @import "material";
+
+// Include non-theme styles for core.
+@include mat-core();
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
+
+body, html {
+    margin: 0px;
+    padding: 0px;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}

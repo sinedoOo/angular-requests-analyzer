@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Analysis } from './types/analysis.interface';
 import { RequesterResult } from './types/requesterResult.interface';
 import { Requester } from './services/requester.service';
+import { HttpRequestType } from './types/httpRequestType.enum';
+import { AnalyzerRequest } from './types/analyzerRequest.interface';
 
 @Component({
   selector: 'analyzer',
@@ -30,6 +32,8 @@ export class AnalyzerComponent implements OnInit {
       vAxis: {title: 'Ilość równoległych zapytań w zadanym oknie czasu'}
   };
 
+  public currentRequest: AnalyzerRequest = null;
+
   private results: Array<{
       simultaneousReqestsCount: number,
       results: RequesterResult}> = null;
@@ -39,7 +43,22 @@ export class AnalyzerComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
-    this.analysis = JSON.parse(localStorage.getItem('analysis'));
+    let savedAnalysis = JSON.parse(localStorage.getItem('analysis'));
+
+    if (savedAnalysis) {
+        this.analysis = savedAnalysis;
+        return true;
+    }
+
+    this.analysis = {
+        queryTime: 3000,
+        rangeOfSimultaneousReqestsQueries: {
+            from: 100,
+            to: 1000
+        },
+        requestsQuery: [],
+        step: 10
+    };
   }
 
   public executeAnalysis(): boolean {
@@ -113,5 +132,24 @@ export class AnalyzerComponent implements OnInit {
       }
 
       return data;
+  }
+
+  public addNewRequest(): AnalyzerRequest {
+      let request = {
+          type: HttpRequestType.GET,
+          url: 'http://',
+          headers: null,
+          data: null
+      };
+
+      this.analysis.requestsQuery.push(request);
+
+      return request;
+  }
+
+  public saveAnalysis(): Analysis {
+      localStorage.setItem('analysis', JSON.stringify(this.analysis));
+
+      return this.analysis;
   }
 }

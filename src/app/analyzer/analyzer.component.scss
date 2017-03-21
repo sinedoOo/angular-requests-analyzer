@@ -1,2 +1,35 @@
+@import '~@angular/material/core/theming/all-theme';
+@import "src/styles/material";
+
+$accent: map-get($theme, accent);
+$primary: map-get($theme, primary);
+
 #analyzer-component {
+    padding: 15px;
+    #analysis-editor {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        > #requests-query {
+            width: 400px;
+            flex: 0 1 auto;
+            .mat-subheader {
+                color: #ffffff;
+                background-color: mat-color($primary);
+            }
+            .query-item {
+                &:hover {
+                    cursor: pointer;
+                }
+                &.active {
+                    color: #ffffff;
+                    background-color: mat-color($accent);
+                }
+            }
+        }
+        > #request-edit {
+            width: 100%;
+            flex: 1 1 auto
+        }
+    }
 }
