@@ -1,4 +1,4 @@
-Angular2 electron application.
+Angular2 electron application to analyze HTTP requests.
 
 # Angular2 Electron (with angular cli)
 
