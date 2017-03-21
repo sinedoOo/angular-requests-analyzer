@@ -1,6 +1,54 @@
+<md-toolbar color="primary">
+    <span>Requests analyzer</span>
+    <span class="fill-remaining-space"></span>
+    <button md-button (click)="saveAnalysis()">
+        <md-icon>archive</md-icon>
+    </button>
+</md-toolbar>
 <div id="analyzer-component">
     <pre class="app-state">{{ analysis | json }}</pre>
-    <button md-button (click)="executeAnalysis()" *ngIf="!executingAnalysis">Execute</button>
+    <div id="analysis-editor">
+        <div id="requests-query">
+            <md-list>
+                <h3 md-subheader>Requests query</h3>
+                <md-list-item *ngFor="let request of analysis.requestsQuery"
+                              (click)="currentRequest = request"
+                              [ngClass]="{
+                                  'query-item': true,
+                                  'active': currentRequest === request
+                              }">
+                    <md-icon md-list-icon>label</md-icon>
+                    <h4 md-line [ngSwitch]="request.type">
+                        <span *ngSwitchCase="1">GET</span>
+                        <span *ngSwitchCase="3">POST</span>
+                    </h4>
+                    <p md-line>{{ request.url }}</p>
+                </md-list-item>
+            </md-list>
+            <button md-fab (click)="addNewRequest()"><md-icon>add</md-icon></button>
+        </div>
+        <div id="request-edit" *ngIf="currentRequest">
+            <h4>Edit request</h4>
+            <div>
+                Current request edit
+                <pre>
+                    {{ currentRequest | json }}
+                </pre>
+            </div>
+        </div>
+    </div>
+    <button md-button (click)="executeAnalysis()" *ngIf="!executingAnalysis">
+        Execute
+    </button>
+    <div id="analyzer-progress" *ngIf="executingAnalysis">
+        <span>{{ requester.queryProgress * 100 | number:'1.0-0' }}%</span>
+        <md-progress-bar class="analyzer-progress-bar"
+                         [color]="primary"
+                         [mode]="determinate"
+                         [value]="requester.queryProgress"
+                         [bufferValue]="1">
+        </md-progress-bar>
+    </div>
     <div id="analyzer-requests-chart"
          *ngIf="executedAnalysis && !executingAnalysis"
          [chartData]="requestsData"
@@ -13,5 +61,4 @@
          [chartOptions] = "delayDataOptions"
          chartType="AreaChart"
          google-chart></div>
-    <span *ngIf="executingAnalysis">{{ requester.queryProgress * 100 | number:'1.0-0' }}%</span>
 </div>
