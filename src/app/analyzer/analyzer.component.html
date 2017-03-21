@@ -1,6 +1,6 @@
 <div id="analyzer-component">
     <pre class="app-state">{{ analysis | json }}</pre>
-    <button (click)="executeAnalysis()" *ngIf="!executingAnalysis">Execute</button>
+    <button md-button (click)="executeAnalysis()" *ngIf="!executingAnalysis">Execute</button>
     <div id="analyzer-requests-chart"
          *ngIf="executedAnalysis && !executingAnalysis"
          [chartData]="requestsData"
