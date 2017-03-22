@@ -4,15 +4,32 @@
 $accent: map-get($theme, accent);
 $primary: map-get($theme, primary);
 
+#toolbar-name-icon {
+    margin-right: 15px;
+    font-size: 35px;
+    width: 35px;
+    height: 35px;
+}
+
 #analyzer-component {
     padding: 30px;
     max-width: 1000px;
-    margin: 0px auto;
-    #analysis-params { }
+    margin: 0 auto;
+    #analysis-params {}
+    #analysis-editor-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        > button {
+            margin: 0 15px;
+        }
+    }
     #analysis-editor {
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
+        margin-left: -24px;
+        width: calc(100% + 48px);
         > #requests-query {
             width: 400px;
             flex: 0 1 auto;
@@ -32,7 +49,20 @@ $primary: map-get($theme, primary);
         }
         > #request-edit {
             width: 100%;
-            flex: 1 1 auto
+            flex: 1 1 auto;
+            padding: 24px;
+            background-color: #eee;
+            margin: 8px 0;
+            > h4 {
+                margin-top: 0;
+            }
+            > div {
+                display: flex;
+                flex-direction: column;
+                > div {
+                    margin-top: 15px;
+                }
+            }
         }
     }
 }

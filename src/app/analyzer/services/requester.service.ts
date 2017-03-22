@@ -13,9 +13,10 @@ export class Requester {
     private analysis: Analysis = null;
     private query: Array<Array<{
         request: AnalyzerRequest,
-        result: RequesterResult}>> = [];
+        result: RequesterResult
+    }>> = [];
 
-    constructor(private http: Http) {}
+    constructor(private http: Http) { }
 
     public setAnalysis(analysis: Analysis): boolean {
         if (!analysis) {
@@ -86,13 +87,19 @@ export class Requester {
                         let request = executionItem.request;
                         let result = executionItem.result;
                         let startDate: number = new Date().getTime();
-                        let expireDate: number = new Date().getTime() + queryTime;
+                        let expireDate: number =
+                            new Date().getTime() + queryTime;
 
-                        requester.processRequest(request, result, startDate, expireDate);
+                        requester.processRequest(
+                            request,
+                            result,
+                            startDate,
+                            expireDate
+                        );
                     }
 
                     requester.queryProgress += 1 / requester.query.length;
-                },(queryTime) * doneCount);
+                }, (queryTime) * doneCount);
             })(doneCount, this);
             doneCount++;
         }
@@ -123,7 +130,7 @@ export class Requester {
             case HttpRequestType.GET:
                 if (options) {
                     executionObject = this.http.get(request.url, options);
-                }else{
+                } else {
                     executionObject = this.http.get(request.url);
                 }
                 break;
@@ -132,9 +139,16 @@ export class Requester {
                     break;
                 }
                 if (options) {
-                    executionObject = this.http.post(request.url, request.data, options);
-                }else{
-                    executionObject = this.http.post(request.url, request.data);
+                    executionObject = this.http.post(
+                        request.url,
+                        request.data,
+                        options
+                    );
+                } else {
+                    executionObject = this.http.post(
+                        request.url,
+                        request.data
+                    );
                 }
                 break;
         }
@@ -177,8 +191,9 @@ export class Requester {
     }
 
     public getFlattenResults(): Array<{
-            simultaneousReqestsCount: number,
-            results: RequesterResult}> {
+        simultaneousReqestsCount: number,
+        results: RequesterResult
+    }> {
         return this.query.map(queryItem => {
             let summaryResults: RequesterResult = {
                 count: 0,
