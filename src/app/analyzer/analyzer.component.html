@@ -4,10 +4,14 @@
     <span class="fill-remaining-space"></span>
     <button md-button
         (click)="executeAnalysis()"
+        mdTooltip="Execute analysis"
+        mdTooltipPosition="below"
         *ngIf="!executingAnalysis">
         <md-icon>play_arrow</md-icon>
     </button>
     <button md-button
+        mdTooltip="Save analysis"
+        mdTooltipPosition="below"
         (click)="saveAnalysis()">
         <md-icon>archive</md-icon>
     </button>
@@ -45,7 +49,11 @@
             <div id="analysis-editor-header">
                 <h3>Requests query</h3>
                 <button md-mini-fab
-                    (click)="addNewRequest()"><md-icon>add</md-icon></button>
+                    mdTooltip="Add new request"
+                    mdTooltipPosition="right"
+                    (click)="addNewRequest()">
+                    <md-icon>add</md-icon>
+                </button>
             </div>
             <div id="analysis-editor">
                 <div id="requests-query">
