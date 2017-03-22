@@ -5,7 +5,10 @@ $accent: map-get($theme, accent);
 $primary: map-get($theme, primary);
 
 #analyzer-component {
-    padding: 15px;
+    padding: 30px;
+    max-width: 1000px;
+    margin: 0px auto;
+    #analysis-params { }
     #analysis-editor {
         display: flex;
         align-items: flex-start;

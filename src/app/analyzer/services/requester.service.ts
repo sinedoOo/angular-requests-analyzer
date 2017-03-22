@@ -92,12 +92,12 @@ export class Requester {
                     }
 
                     requester.queryProgress += 1 / requester.query.length;
-                },(queryTime + 1000) * doneCount);
+                },(queryTime) * doneCount);
             })(doneCount, this);
             doneCount++;
         }
 
-        return (queryTime + 1000) * this.query.length + 2000;
+        return (queryTime) * (this.query.length + 1);
     }
 
     private processRequest(

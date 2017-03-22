@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 
 import { Requester } from './analyzer/services/requester.service';
@@ -24,6 +25,7 @@ const routes: Routes = [
     imports: [
         BrowserModule,
         RouterModule.forRoot(routes, { useHash: true }),
+        FormsModule,
         MaterialModule
     ],
     providers: [Requester],

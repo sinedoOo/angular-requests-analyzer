@@ -1,64 +1,98 @@
 <md-toolbar color="primary">
     <span>Requests analyzer</span>
     <span class="fill-remaining-space"></span>
+    <button md-button (click)="executeAnalysis()" *ngIf="!executingAnalysis">
+        <md-icon>play_arrow</md-icon>
+    </button>
     <button md-button (click)="saveAnalysis()">
         <md-icon>archive</md-icon>
     </button>
 </md-toolbar>
 <div id="analyzer-component">
-    <pre class="app-state">{{ analysis | json }}</pre>
-    <div id="analysis-editor">
-        <div id="requests-query">
-            <md-list>
-                <h3 md-subheader>Requests query</h3>
-                <md-list-item *ngFor="let request of analysis.requestsQuery"
-                              (click)="currentRequest = request"
-                              [ngClass]="{
-                                  'query-item': true,
-                                  'active': currentRequest === request
-                              }">
-                    <md-icon md-list-icon>label</md-icon>
-                    <h4 md-line [ngSwitch]="request.type">
-                        <span *ngSwitchCase="1">GET</span>
-                        <span *ngSwitchCase="3">POST</span>
-                    </h4>
-                    <p md-line>{{ request.url }}</p>
-                </md-list-item>
-            </md-list>
-            <button md-fab (click)="addNewRequest()"><md-icon>add</md-icon></button>
+    <md-card>
+      <md-card-content>
+        <h2>Analysis editor</h2>
+        <div id="analysis-params">
+          <md-input-container>
+            <input mdInput
+                   type="number"
+                   placeholder="Query execution time (ms)"
+                   [(ngModel)]="analysis.queryTime">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput
+                   type="number"
+                   placeholder="Minimal simultaneous requests"
+                   [(ngModel)]="analysis.rangeOfSimultaneousReqestsQueries.from">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput
+                   type="number"
+                   placeholder="Minimal simultaneous requests"
+                   [(ngModel)]="analysis.rangeOfSimultaneousReqestsQueries.to">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput
+                   type="number"
+                   placeholder="Execution query step size"
+                   [(ngModel)]="analysis.step">
+          </md-input-container>
         </div>
-        <div id="request-edit" *ngIf="currentRequest">
-            <h4>Edit request</h4>
-            <div>
-                Current request edit
-                <pre>
-                    {{ currentRequest | json }}
-                </pre>
+        <div id="analysis-editor">
+            <div id="requests-query">
+                <md-list>
+                    <h3 md-subheader>Requests query</h3>
+                    <md-list-item *ngFor="let request of analysis.requestsQuery"
+                                  (click)="currentRequest = request"
+                                  [ngClass]="{
+                                      'query-item': true,
+                                      'active': currentRequest === request
+                                  }">
+                        <md-icon md-list-icon>label</md-icon>
+                        <h4 md-line [ngSwitch]="request.type">
+                            <span *ngSwitchCase="1">GET</span>
+                            <span *ngSwitchCase="3">POST</span>
+                        </h4>
+                        <p md-line>{{ request.url }}</p>
+                    </md-list-item>
+                </md-list>
+                <button md-fab (click)="addNewRequest()"><md-icon>add</md-icon></button>
+            </div>
+            <div id="request-edit" *ngIf="currentRequest">
+                <h4>Edit request</h4>
+                <div>
+                    Current request edit
+                    <pre>
+                        {{ currentRequest | json }}
+                    </pre>
+                </div>
             </div>
         </div>
-    </div>
-    <button md-button (click)="executeAnalysis()" *ngIf="!executingAnalysis">
-        Execute
-    </button>
-    <div id="analyzer-progress" *ngIf="executingAnalysis">
-        <span>{{ requester.queryProgress * 100 | number:'1.0-0' }}%</span>
-        <md-progress-bar class="analyzer-progress-bar"
-                         [color]="primary"
-                         [mode]="determinate"
-                         [value]="requester.queryProgress"
-                         [bufferValue]="1">
+      </md-card-content>
+    </md-card>
+    <md-card *ngIf="executingAnalysis || (executedAnalysis && !executingAnalysis)">
+      <md-card-content>
+        <h2>Results</h2>
+        <div id="analyzer-progress" *ngIf="executingAnalysis">
+          <span>{{ requester.queryProgress * 100 | number:'1.0-0' }}%</span>
+          <md-progress-bar class="analyzer-progress-bar"
+                           [color]="primary"
+                           [mode]="determinate"
+                           [value]="requester.queryProgress * 100">
         </md-progress-bar>
-    </div>
-    <div id="analyzer-requests-chart"
-         *ngIf="executedAnalysis && !executingAnalysis"
-         [chartData]="requestsData"
-         [chartOptions] = "requestsDataOptions"
-         chartType="AreaChart"
-         google-chart></div>
-    <div id="analyzer-delay-chart"
-         *ngIf="executedAnalysis && !executingAnalysis"
-         [chartData]="delayData"
-         [chartOptions] = "delayDataOptions"
-         chartType="AreaChart"
-         google-chart></div>
+      </div>
+      <div id="analyzer-requests-chart"
+           *ngIf="executedAnalysis && !executingAnalysis"
+           [chartData]="requestsData"
+           [chartOptions] = "requestsDataOptions"
+           chartType="AreaChart"
+           google-chart></div>
+      <div id="analyzer-delay-chart"
+           *ngIf="executedAnalysis && !executingAnalysis"
+           [chartData]="delayData"
+           [chartOptions] = "delayDataOptions"
+           chartType="AreaChart"
+           google-chart></div>
+      </md-card-content>
+    </md-card>
 </div>

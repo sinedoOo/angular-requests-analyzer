@@ -21,15 +21,15 @@ export class AnalyzerComponent implements OnInit {
       isStacked: true,
       title: 'Ilość wykonanych zapytań',
       curveType: 'function',
-      hAxis: {title: 'Ilość zapytań'},
-      vAxis: {title: 'Ilość równoległych zapytań w zadanym oknie czasu'}
+      vAxis: {title: 'Ilość zapytań'},
+      hAxis: {title: 'Ilość równoległych zapytań w zadanym oknie czasu'}
   };
   public delayData: any[][] = null;
   public delayDataOptions = {
       title: 'Opóźnienia wykonywanych zapytań',
       curveType: 'function',
-      hAxis: {title: 'Opóźnienie zapytań'},
-      vAxis: {title: 'Ilość równoległych zapytań w zadanym oknie czasu'}
+      vAxis: {title: 'Opóźnienie zapytań'},
+      hAxis: {title: 'Ilość równoległych zapytań w zadanym oknie czasu'}
   };
 
   public currentRequest: AnalyzerRequest = null;
@@ -137,7 +137,7 @@ export class AnalyzerComponent implements OnInit {
   public addNewRequest(): AnalyzerRequest {
       let request = {
           type: HttpRequestType.GET,
-          url: 'http://',
+          url: 'http://localhost/',
           headers: null,
           data: null
       };
