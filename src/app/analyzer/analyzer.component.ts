@@ -162,6 +162,20 @@ export class AnalyzerComponent implements OnInit {
         return request;
     }
 
+    public removeCurrentRequest(): AnalyzerRequest {
+        let request = this.currentRequest;
+        let currentRequestIndex = this.analysis.requestsQuery.indexOf(request);
+
+        if (currentRequestIndex > -1)
+        {
+            this.analysis.requestsQuery.splice(currentRequestIndex, 1);
+        }
+
+        this.currentRequest = null;
+
+        return request;
+    }
+
     public saveAnalysis(): Analysis {
         localStorage.setItem('analysis', JSON.stringify(this.analysis));
 

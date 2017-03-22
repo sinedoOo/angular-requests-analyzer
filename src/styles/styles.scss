@@ -14,3 +14,8 @@ body, html {
 .fill-remaining-space {
     flex: 1 1 auto;
 }
+
+.remove-button {
+    color: #ffffff !important;
+    background-color: mat-color($accent);
+}

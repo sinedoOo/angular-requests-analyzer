@@ -67,9 +67,9 @@
                             <md-icon md-list-icon>label</md-icon>
                             <h4 md-line
                                 [ngSwitch]="request.type">
-                            <span *ngSwitchCase="1">GET</span>
-                            <span *ngSwitchCase="3">POST</span>
-                        </h4>
+                                <span *ngSwitchCase="1">GET</span>
+                                <span *ngSwitchCase="3">POST</span>
+                            </h4>
                             <p md-line>{{ request.url }}</p>
                         </md-list-item>
                     </md-list>
@@ -94,6 +94,14 @@
                                     placeholder="URL"
                                     [(ngModel)]="currentRequest.url">
                             </md-input-container>
+                        </div>
+                        <div>
+                            <button md-raised-button
+                                (click)="removeCurrentRequest()"
+                                class="remove-button">
+                                <md-icon>delete_forever</md-icon>
+                                Remove this request
+                            </button>
                         </div>
                     </div>
                 </div>
