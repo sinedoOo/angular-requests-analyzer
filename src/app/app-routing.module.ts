@@ -7,6 +7,7 @@ import { MaterialModule } from '@angular/material';
 import { Requester } from './analyzer/services/requester.service';
 import { AnalyzerComponent } from './analyzer/analyzer.component';
 import { GoogleChart } from './../directives/googleChart.directive';
+import { KeysPipe } from './../pipes/keys.pipe';
 
 const routes: Routes = [
     {
@@ -31,7 +32,8 @@ const routes: Routes = [
     providers: [Requester],
     declarations: [
         AnalyzerComponent,
-        GoogleChart
+        GoogleChart,
+        KeysPipe
     ],
     exports: [
         RouterModule

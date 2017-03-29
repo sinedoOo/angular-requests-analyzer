@@ -36,7 +36,7 @@
                 <md-input-container>
                     <input mdInput
                         type="number"
-                        placeholder="Minimal simultaneous requests"
+                        placeholder="Maximal simultaneous requests"
                         [(ngModel)]="analysis.rangeOfSimultaneousReqestsQueries.to">
                 </md-input-container>
                 <md-input-container>
@@ -59,7 +59,7 @@
                 <div id="requests-query">
                     <md-list>
                         <md-list-item *ngFor="let request of analysis.requestsQuery"
-                            (click)="currentRequest = request"
+                            (click)="selectCurrentRequest(request)"
                             [ngClass]="{
                                       'query-item': true,
                                       'active': currentRequest === request
@@ -93,6 +93,48 @@
                                     type="text"
                                     placeholder="URL"
                                     [(ngModel)]="currentRequest.url">
+                            </md-input-container>
+                        </div>
+                        <div *ngIf="currentRequest.headers">
+                            <span class="label">Headers</span>
+                            <div *ngFor="let key of currentRequest.headers | keys"
+                                class="header-item">
+                                <strong>{{ key }}:</strong>
+                                <span>{{ currentRequest.headers[key] }}</span>
+                                <button md-button
+                                    (click)="deleteCurrentRequestHeader(key)">
+                                    <md-icon>delete_forever</md-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <md-input-container>
+                                <input mdInput
+                                    type="text"
+                                    placeholder="Header key"
+                                    [(ngModel)]="currentRequestNewHeader.key">
+                            </md-input-container>
+                            <md-input-container>
+                                <input mdInput
+                                    type="text"
+                                    placeholder="Header value"
+                                    [(ngModel)]="currentRequestNewHeader.value">
+                            </md-input-container>
+                            <button md-mini-fab
+                                mdTooltip="Add new header"
+                                mdTooltipPosition="right"
+                                (click)="addNewHeader()">
+                                <md-icon>add</md-icon>
+                            </button>
+                        </div>
+                        <div>
+                            <md-input-container>
+                                <textarea mdInput
+                                    rows="4"
+                                    cols="50"
+                                    placeholder="Data"
+                                    [(ngModel)]="currentRequest.data">
+                                </textarea>
                             </md-input-container>
                         </div>
                         <div>

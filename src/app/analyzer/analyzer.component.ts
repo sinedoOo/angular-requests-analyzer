@@ -45,6 +45,10 @@ export class AnalyzerComponent implements OnInit {
             data: false
         }
     ];
+    public currentRequestNewHeader: { key: string, value: string } = {
+        key: '',
+        value: ''
+    };
 
     private results: Array<{
         simultaneousReqestsCount: number,
@@ -149,6 +153,17 @@ export class AnalyzerComponent implements OnInit {
         return data;
     }
 
+    public selectCurrentRequest(request: AnalyzerRequest): AnalyzerRequest {
+        this.currentRequest = request;
+
+        this.currentRequestNewHeader = {
+            key: '',
+            value: ''
+        };
+
+        return this.currentRequest;
+    }
+
     public addNewRequest(): AnalyzerRequest {
         let request = {
             type: HttpRequestType.GET,
@@ -174,6 +189,35 @@ export class AnalyzerComponent implements OnInit {
         this.currentRequest = null;
 
         return request;
+    }
+
+    public addNewHeader(): boolean {
+        let key = this.currentRequestNewHeader.key;
+        let value = this.currentRequestNewHeader.value;
+
+        if (!key.length || !value.length)
+            return false;
+
+        if (!this.currentRequest.headers)
+            this.currentRequest.headers = {};
+
+        this.currentRequest.headers[key] = value;
+
+        this.currentRequestNewHeader = {
+            key: '',
+            value: ''
+        };
+
+        return true;
+    }
+
+    public deleteCurrentRequestHeader(key: string): boolean {
+        if (!this.currentRequest.headers[key])
+            return false;
+
+        delete this.currentRequest.headers[key];
+
+        return true;
     }
 
     public saveAnalysis(): Analysis {
