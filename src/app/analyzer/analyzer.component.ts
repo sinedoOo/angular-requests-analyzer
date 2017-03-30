@@ -71,10 +71,10 @@ export class AnalyzerComponent implements OnInit {
             queryTime: 3000,
             rangeOfSimultaneousReqestsQueries: {
                 from: 100,
-                to: 1000
+                to: 700
             },
             requestsQuery: [],
-            step: 10
+            step: 100
         };
     }
 
