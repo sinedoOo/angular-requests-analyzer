@@ -1,6 +1,6 @@
 {
     "project": {
-        "version": "0.1.0",
+        "version": "0.1.1",
         "name": "angular-requests-analyzer"
     },
     "apps": [{
@@ -12,6 +12,7 @@
         ],
         "index": "index.html",
         "main": "main.ts",
+        "polyfills": "polyfills.ts",
         "tsconfig": "tsconfig.json",
         "prefix": "app",
         "mobile": false,
