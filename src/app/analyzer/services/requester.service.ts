@@ -35,7 +35,7 @@ export class Requester {
     private generateRequestsQuery(): boolean {
         this.query = [];
         let range = this.analysis.rangeOfSimultaneousReqestsQueries;
-        let step = this.analysis.step || 1;
+        let step = this.analysis.step;
 
         for (let queryCount = range.from;
             queryCount <= range.to;
@@ -55,7 +55,7 @@ export class Requester {
                         count: 0,
                         interrupts: 0,
                         delay: {
-                            min: 0,
+                            min: Number.MAX_SAFE_INTEGER,
                             avg: 0,
                             max: 0
                         }
@@ -113,8 +113,9 @@ export class Requester {
         startDate: number,
         expireDate: number): void {
         let now: number = new Date().getTime();
+        let queryTime = this.analysis.queryTime;
 
-        if (now > expireDate) {
+        if (now + queryTime > expireDate) {
             return;
         }
 
@@ -157,37 +158,30 @@ export class Requester {
             return;
         }
 
-        executionObject.subscribe(
-            data => {
-                let delay: number = new Date().getTime() - startDate;
-                result.count++;
-                result.delay.avg += delay;
-                result.delay.min = Math.min(
-                    result.delay.min,
-                    delay
-                );
-                result.delay.max = Math.max(
-                    result.delay.max,
-                    delay
-                );
-                this.processRequest(request, result, now, expireDate);
-            },
-            data => {
-                let delay: number = new Date().getTime() - startDate;
-                result.count++;
-                result.interrupts++;
-                result.delay.avg += delay;
-                result.delay.min = Math.min(
-                    result.delay.min,
-                    delay
-                );
-                result.delay.max = Math.max(
-                    result.delay.max,
-                    delay
-                );
-                this.processRequest(request, result, now, expireDate);
-            }
-        );
+        executionObject
+            .timeout(expireDate - now)
+            .subscribe(
+                data => {
+                    let delay: number = new Date().getTime() - startDate;
+                    result.count++;
+                    result.delay.avg += delay;
+                    result.delay.min = Math.min(
+                        result.delay.min,
+                        delay
+                    );
+                    result.delay.max = Math.max(
+                        result.delay.max,
+                        delay
+                    );
+                    this.processRequest(request, result, now, expireDate);
+                },
+                () => {
+                    console.log('interrupt');
+                    result.count++;
+                    result.interrupts++;
+                    this.processRequest(request, result, now, expireDate);
+                }
+            );
     }
 
     public getFlattenResults(): Array<{
@@ -220,7 +214,7 @@ export class Requester {
             }
 
             summaryResults.delay.avg =
-                (summaryResults.delay.avg / summaryResults.count) || 0;
+                (summaryResults.delay.avg / (summaryResults.count - summaryResults.interrupts)) || 0;
 
             return {
                 simultaneousReqestsCount: queryItem.length,

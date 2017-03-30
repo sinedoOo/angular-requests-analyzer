@@ -111,7 +111,7 @@ export class AnalyzerComponent implements OnInit {
         data.push([
             'Ilość równoległych zapytań w zadanym oknie czasu',
             'Zapytania zakończone sukcesem',
-            'Wszystkie wykonane zapytania',
+            'Zapytania nieudane',
         ]);
 
         for (let result of results) {
