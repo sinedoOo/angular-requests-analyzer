@@ -1,6 +1,10 @@
-Angular2 electron application to analyze HTTP requests.
+Angular2 electron application to analyze HTTP requests quality. It's simple student project.
 
-# Angular2 Electron (with angular cli)
+# Screenshot
+
+![alt text](screenshots/app.png "App running on Linux")
+
+# Build & development (with angular cli)
 
 ```bash
 
